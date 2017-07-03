@@ -1,5 +1,5 @@
 import React  from 'react';
-import { Table, Modal } from 'antd';
+import { Table } from 'antd';
 import PropTypes from 'prop-types';
 import axios from 'axios'
 
@@ -12,7 +12,7 @@ class AdvancedTable extends React.Component {
             showTotal: (total, range) => {`${range[0]}-${range[1]} 共${total}条`},
             defaultCurrent: 1
         },
-        data: {}
+        data: []
     };
 
     componentDidMount() {
@@ -26,7 +26,7 @@ class AdvancedTable extends React.Component {
             pagination: pager,
         });
         this.fetch({
-            limit: pagination.pageSize,
+            pageSize: pagination.pageSize,
             page: pagination.current,
             sortField: sorter.field,
             sortOrder: sorter.order,
@@ -36,15 +36,16 @@ class AdvancedTable extends React.Component {
 
     fetch = (params = {}) => {
         this.setState({ loading: true });
-        axios.post(this.props.dataUrl, {
-            limit: this.state.pagination.pageSize,
-            ...params,
+        axios.get(this.props.dataUrl, {
+            pageSize: this.state.pagination.pageSize,
+            ...this.props.dataParams,
+            ...params
         }).then((response) => {
             const pagination = {...this.state.pagination};
-            pagination.total = response.totalCount;
+            pagination.total = response.data.totalCount;
             this.setState({
                 loading: false,
-                data: response.data,
+                data: response.data.results,
                 pagination,
             });
         })
@@ -56,7 +57,8 @@ class AdvancedTable extends React.Component {
 
         return (
             <div>
-                <Table bordered={true} pagination={pagination} scroll={true} columns={this.props.columns}
+                <Table bordered={true} pagination={pagination} scroll={{ x: true, y: 600 }} columns={this.props.columns}
+                       rowKey={record => record[this.props.columns[0].dataIndex]}
                        dataSource={this.state.data} onChange={this.handleTableChange} />
             </div>
         );
@@ -67,6 +69,7 @@ AdvancedTable.protoTypes = {
     showPagination: PropTypes.bool,
     columns: PropTypes.shape(Table.Column).isRequired,
     dataUrl: PropTypes.string.isRequired,
+    dataParams: PropTypes.object,
     addUrl: PropTypes.string.isRequired,
     removeUrl: PropTypes.string.isRequired,
 };

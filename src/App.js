@@ -25,7 +25,7 @@ class App extends Component {
 
     return (
       <div className="App">
-          <AdvancedTable showPagination={true} dataUrl={"https://randomuser.me/api"} columns={tableColumns} />
+          <AdvancedTable showPagination={true} dataUrl={"https://randomuser.me/api"} dataParams={{results:10}} columns={tableColumns} />
       </div>
     );
   }
