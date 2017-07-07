@@ -1,11 +1,11 @@
 import React  from 'react';
-import { Table } from 'antd';
 import PropTypes from 'prop-types';
 import axios from 'axios'
+import BasicTable from "./components/BasicTable";
 
 class AdvancedTable extends React.Component {
     state = {
-        loading: false,
+        selectedRowKeys: [],  // Check here to configure the default column
         pagination: {
             total: 0,
             pageSize: 20,
@@ -18,6 +18,11 @@ class AdvancedTable extends React.Component {
     componentDidMount() {
         this.fetch()
     }
+
+    onSelectChange = (selectedRowKeys) => {
+        console.log('selectedRowKeys changed: ', selectedRowKeys);
+        this.setState({selectedRowKeys});
+    };
 
     handleTableChange = (pagination, filters, sorter) => {
         const pager = {...this.state.pagination};
@@ -36,7 +41,7 @@ class AdvancedTable extends React.Component {
 
     fetch = (params = {}) => {
         this.setState({ loading: true });
-        axios.get(this.props.dataUrl, {
+        axios.post(this.props.dataUrl, {
             pageSize: this.state.pagination.pageSize,
             ...this.props.dataParams,
             ...params
@@ -55,10 +60,16 @@ class AdvancedTable extends React.Component {
         // pagination
         const pagination = this.props.showPagination?this.state.pagination:false;
 
+        const {selectedRowKeys} = this.state;
+        const rowSelection = {
+            selectedRowKeys,
+            onChange: this.onSelectChange,
+        };
+
         return (
             <div>
                 <Table bordered={true} pagination={pagination} scroll={{ x: true, y: 600 }} columns={this.props.columns}
-                       rowKey={record => record[this.props.columns[0].dataIndex]}
+                       rowKey={record => record[this.props.columns[0].dataIndex]} rowSelection={rowSelection}
                        dataSource={this.state.data} onChange={this.handleTableChange} />
             </div>
         );
@@ -67,11 +78,10 @@ class AdvancedTable extends React.Component {
 
 AdvancedTable.protoTypes = {
     showPagination: PropTypes.bool,
+    showSelection: PropTypes.bool,
     columns: PropTypes.shape(Table.Column).isRequired,
     dataUrl: PropTypes.string.isRequired,
     dataParams: PropTypes.object,
-    addUrl: PropTypes.string.isRequired,
-    removeUrl: PropTypes.string.isRequired,
 };
 
 export default AdvancedTable;

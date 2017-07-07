@@ -1,34 +1,31 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import './App.css';
-import AdvancedTable from "./components/advancedTable";
+import AdvancedTable from "./components/AdvancedTable";
+import BasicTable from "./components/BasicTable";
 
 class App extends Component {
-  render() {
-      const tableColumns = [{
-          title: 'Name',
-          dataIndex: 'name',
-          sorter: true,
-          render: name => `${name.first} ${name.last}`,
-          width: '20%',
-      }, {
-          title: 'Gender',
-          dataIndex: 'gender',
-          filters: [
-              { text: 'Male', value: 'male' },
-              { text: 'Female', value: 'female' },
-          ],
-          width: '20%',
-      }, {
-          title: 'Email',
-          dataIndex: 'email',
-      }];
+    render() {
+        const tableColumns = [
+            {
+                dataIndex: 'id',
+                className: 'none'
+            }, {
+                title: 'Title',
+                dataIndex: 'title',
+                sorter: true,
+            }, {
+                title: 'Author',
+                dataIndex: 'author',
+            }];
 
-    return (
-      <div className="App">
-          <AdvancedTable showPagination={true} dataUrl={"https://randomuser.me/api"} dataParams={{results:10}} columns={tableColumns} />
-      </div>
-    );
-  }
+        return (
+            <div className="App">
+                <br /><br />
+                <BasicTable dataUrl={"http://localhost:3001/table"} columns={tableColumns}/>
+                <br /><br />
+            </div>
+        );
+    }
 }
 
 export default App;
