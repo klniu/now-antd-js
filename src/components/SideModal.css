@@ -34,18 +34,3 @@
     margin: 20px 10px;
 }
 
-i:focus {
-  color: #fff;
-}
-
-button:focus {
-    color: #fff;
-}
-
-i:hover {
-    color: #fff;
-}
-
-button:hover{
-    color: #fff;
-}

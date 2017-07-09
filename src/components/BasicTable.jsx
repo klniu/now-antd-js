@@ -26,7 +26,7 @@ class BasicTable extends React.Component {
     };
 
     handleTableChange = (pagination, filters, sorter) => {
-        let params = {}
+        let params = {};
         // display pagination
         if (this.props.showPagination) {
             const pager = {...this.state.pagination};

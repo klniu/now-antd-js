@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 import BasicTable from "./components/BasicTable";
+import AdvancedTable from "./components/AdvancedTable";
 import {FieldType, getFormItems} from './components/forms'
 import { Form, Button} from 'antd';
 import SideModal from "./components/SideModal";
@@ -28,18 +29,19 @@ class App extends Component {
                 title: 'Author',
                 dataIndex: 'author',
             }];
+        const tableDataUrl = "http://localhost:3001/table";
 
         return (
             <div className="App">
                 <br /><br />
                 <h2>基础表格</h2>
-                <BasicTable dataUrl={"http://localhost:3001/table"} columns={tableColumns}/>
+                <BasicTable dataUrl={tableDataUrl} columns={tableColumns}/>
                 <br /><br />
                 <h2>带分页的基础表格</h2>
-                <BasicTable dataUrl={"http://localhost:3001/table"} columns={tableColumns} showPagination={true}/>
+                <BasicTable dataUrl={tableDataUrl} columns={tableColumns} showPagination={true}/>
                 <br /><br />
                 <h2>带分页和多选的基础表格</h2>
-                <BasicTable dataUrl={"http://localhost:3001/table"} columns={tableColumns} showPagination={true}
+                <BasicTable dataUrl={tableDataUrl} columns={tableColumns} showPagination={true}
                             showSelection={true}/>
                 <br /><br />
                 <WrappedFormDemo />
@@ -48,6 +50,10 @@ class App extends Component {
                 <SideModal title={this.state.modalTitle} visible={this.state.modalVisible} onOK={this.state.onOk}
                            onCancel={this.state.onCancel}
                 ><WrappedFormDemo /></SideModal>
+
+                <br /><br />
+                <h2>高级表格</h2>
+                <AdvancedTable columns={tableColumns} dataUrl = {tableDataUrl}/>
             </div>
         );
     }
