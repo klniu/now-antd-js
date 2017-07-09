@@ -2,9 +2,19 @@ import React, {Component} from 'react';
 import './App.css';
 import BasicTable from "./components/BasicTable";
 import {FieldType, getFormItems} from './components/forms'
-import { Form} from 'antd';
+import { Form, Button} from 'antd';
+import SideModal from "./components/SideModal";
 
 class App extends Component {
+    state ={
+        modalVisible: false,
+        modalTitle: "Modal",
+        onOk: ()=> this.setState({modalVisible: false}),
+        onCancel: ()=> this.setState({modalVisible: false}),
+    };
+    openModal = ()=>{
+        this.setState({modalVisible: true});
+    };
     render() {
         const tableColumns = [
             {
@@ -33,6 +43,11 @@ class App extends Component {
                             showSelection={true}/>
                 <br /><br />
                 <WrappedFormDemo />
+                <br /><br />
+                <Button onClick={this.openModal}>Modal</Button>
+                <SideModal title={this.state.modalTitle} visible={this.state.modalVisible} onOK={this.state.onOk}
+                           onCancel={this.state.onCancel}
+                ><WrappedFormDemo /></SideModal>
             </div>
         );
     }
