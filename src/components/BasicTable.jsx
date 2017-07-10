@@ -8,7 +8,6 @@ class BasicTable extends React.Component {
     state = {
         loading: false,
         data: [],
-        selectedRowKeys: []
     };
 
     componentDidMount() {
@@ -20,10 +19,6 @@ class BasicTable extends React.Component {
             this.fetch(nextProps.dataParams)
         }
     }
-
-    onSelectChange = (selectedRowKeys) => {
-        this.setState({selectedRowKeys});
-    };
 
     handleTableChange = (pagination, filters, sorter) => {
         let params = {};
@@ -73,10 +68,10 @@ class BasicTable extends React.Component {
         const pagination = this.props.showPagination ? this.state.pagination : false;
 
         // selection
-        const {selectedRowKeys} = this.state;
+        const {selectedRowKeys} = this.props;
         const rowSelection = this.props.showSelection ? {
             selectedRowKeys,
-            onChange: this.onSelectChange,
+            onChange: this.props.onSelectChange,
         } : null;
 
         return (
@@ -93,6 +88,8 @@ class BasicTable extends React.Component {
 
 BasicTable.protoTypes = {
     showSelection: PropTypes.bool,
+    onSelectChange: PropTypes.func,
+    selectedRowKeys: PropTypes.array,
     showPagination: PropTypes.bool,
     columns: PropTypes.shape(Table.Column).isRequired,
     dataUrl: PropTypes.string.isRequired,

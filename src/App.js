@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 import BasicTable from "./components/BasicTable";
-import AdvancedTable from "./components/AdvancedTable";
+import AdvancedTable from "./components/advancedTable";
 import {FieldType, getFormItems} from './components/forms'
 import { Form, Button} from 'antd';
 import SideModal from "./components/SideModal";
@@ -30,6 +30,21 @@ class App extends Component {
                 dataIndex: 'author',
             }];
         const tableDataUrl = "http://localhost:3001/table";
+        const formOptions = [
+            {
+                id: "id",
+                type: FieldType.Text,
+                hide: true
+            }, {
+                id: "title",
+                type: FieldType.Text,
+                label: "Title",
+            }, {
+                id: "author",
+                type: FieldType.Text,
+                label: "Author"
+            }
+        ];
 
         return (
             <div className="App">
@@ -53,7 +68,9 @@ class App extends Component {
 
                 <br /><br />
                 <h2>高级表格</h2>
-                <AdvancedTable columns={tableColumns} dataUrl = {tableDataUrl}/>
+                <AdvancedTable columns={tableColumns} dataUrl = {tableDataUrl} removeUrl = {tableDataUrl+"/remove"}
+                               formOptions={formOptions} formTitle="高级表格测试"
+                />
             </div>
         );
     }
