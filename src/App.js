@@ -69,7 +69,8 @@ class App extends Component {
                 <br /><br />
                 <h2>高级表格</h2>
                 <AdvancedTable columns={tableColumns} dataUrl = {tableDataUrl} removeUrl = {tableDataUrl+"/remove"}
-                               formOptions={formOptions} formTitle="高级表格测试"
+                               formOptions={formOptions} formTitle="高级表格测试" addUrl={tableDataUrl + "/add"}
+                               editUrl={tableDataUrl + "/edit"}
                 />
             </div>
         );

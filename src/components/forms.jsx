@@ -2,7 +2,8 @@ import * as React from 'react';
 import { Input, Form, InputNumber, Select, DatePicker, Cascader, TreeSelect, Checkbox } from 'antd';
 import moment from 'moment';
 import { isArray, isObject } from 'util';
-import _ from 'lodash';
+import update from 'immutability-helper';
+
 export var FieldType;
 (function (FieldType) {
     FieldType[FieldType["Text"] = 0] = "Text";
@@ -227,5 +228,5 @@ export function handleFormData(values, formOptions) {
             params[v.id] = v.submit(value, formOptions, values);
         }
     }
-    return _.assign(values, { $merge: params });
+    return update(values, { $merge: params });
 }
