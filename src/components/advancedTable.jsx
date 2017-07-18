@@ -6,7 +6,7 @@ import BasicTable from './BasicTable';
 import SideModal from "./SideModal";
 import {getFormItems, handleFormData} from './forms'
 import {RandomStr} from "./common";
-import _ from 'lodash';
+import {isEqual} from 'lodash/lang';
 
 class AdvancedTableBase extends React.Component {
     state = {
@@ -85,14 +85,13 @@ class AdvancedTableBase extends React.Component {
     handleSubmit = () => {
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                if (_.isEqual(values, this.state.formInitData)) {
+                if (isEqual(values, this.state.formInitData)) {
                     Modal.warning({
                         title: '提交表单',
                         content: "表单未修改"
                     });
                     return
                 }
-                console.log(values)
                 this.sendForm(handleFormData(values, this.props.formOptions))
             }
         });

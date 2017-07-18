@@ -2,7 +2,7 @@ import React  from 'react';
 import {Table, Modal} from 'antd';
 import PropTypes from 'prop-types';
 import axios from 'axios'
-import _ from 'lodash';
+import {isEqual, isUndefined} from 'lodash/lang';
 import update from 'immutability-helper';
 
 class BasicTable extends React.Component {
@@ -17,7 +17,7 @@ class BasicTable extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (!_.isEqual(this.props.dataParams, nextProps.dataParams) || this.props.refresh !== nextProps.refresh) {
+        if (!isEqual(this.props.dataParams, nextProps.dataParams) || this.props.refresh !== nextProps.refresh) {
             this.fetch()
         }
     }
@@ -37,7 +37,7 @@ class BasicTable extends React.Component {
             //     page: pagination.current
             // });
         }
-        if (!_.isUndefined(sorter)) {
+        if (!isUndefined(sorter)) {
             tableParams = update(tableParams, {sorter: {$merge: {field: sorter.field, order: sorter.order}}})
         }
         this.setState({tableParams});

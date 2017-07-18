@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Input, Form, InputNumber, Select, DatePicker, Cascader, TreeSelect, Checkbox } from 'antd';
 import moment from 'moment';
-import { isArray, isObject } from 'util';
+import { isArray, isObject } from 'lodash/lang';
 import update from 'immutability-helper';
 
 export var FieldType;
