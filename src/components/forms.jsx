@@ -100,7 +100,7 @@ export function getFormItems(getFieldDecorator, formOptions, initData, formItemL
                 if (arrayValues) {
                     for (let opt of arrayValues) {
                         options.push((
-                            <Select.Option value={opt.value} key={opt.value}>
+                            <Select.Option value={opt.value+""} key={opt.value}>
                                 {opt.title}
                             </Select.Option>));
                     }
@@ -121,7 +121,7 @@ export function getFormItems(getFieldDecorator, formOptions, initData, formItemL
                 if (arrayValues) {
                     for (let opt of arrayValues) {
                         mOptions.push((
-                            <Select.Option value={opt.value} key={opt.value}>
+                            <Select.Option value={opt.value+""} key={opt.value}>
                                 {opt.title}
                             </Select.Option>));
                     }
