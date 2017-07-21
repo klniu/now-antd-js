@@ -4,7 +4,7 @@ import moment from 'moment';
 import { isArray, isObject } from 'lodash/lang';
 import update from 'immutability-helper';
 
-export var FieldType;
+export let FieldType;
 (function (FieldType) {
     FieldType[FieldType["Text"] = 0] = "Text";
     FieldType[FieldType["PlainText"] = 1] = "PlainText";

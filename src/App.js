@@ -2,9 +2,10 @@ import React, {Component} from 'react';
 import './App.css';
 import BasicTable from "./components/BasicTable";
 import AdvancedTable from "./components/advancedTable";
-import {FieldType, getFormItems} from './components/forms'
+import {FieldType, getFormItems} from './components/formBuilder'
 import { Form, Button} from 'antd';
 import SideModal from "./components/SideModal";
+import FormPage from "./components/formPage";
 
 class App extends Component {
     state ={
@@ -39,6 +40,13 @@ class App extends Component {
                 id: "title",
                 type: FieldType.Text,
                 label: "Title",
+                fieldOptions: {
+                    rules: [
+                        {
+                            required: true
+                        }
+                    ]
+                }
             }, {
                 id: "author",
                 type: FieldType.Text,
@@ -72,6 +80,9 @@ class App extends Component {
                                formOptions={formOptions} formTitle="高级表格测试" addUrl={tableDataUrl + "/add"}
                                editUrl={tableDataUrl + "/edit"}
                 />
+                <br /><br />
+                <h2>表单页面</h2>
+                <FormPage formOptions={formOptions} url="#" />
             </div>
         );
     }
@@ -255,8 +266,8 @@ class FormDemo extends React.Component {
             labelCol: { span: 6 },
             wrapperCol: { span: 14 },
         };
-        let formItems = getFormItems(getFieldDecorator, formOptions, undefined, formItemLayout)
-        let formItemsIncludeInit = getFormItems(getFieldDecorator, formOptions, initData, formItemLayout)
+        let formItems = getFormItems(getFieldDecorator, formOptions, undefined, formItemLayout);
+        let formItemsIncludeInit = getFormItems(getFieldDecorator, formOptions, initData, formItemLayout);
 
         return (
             <div>
