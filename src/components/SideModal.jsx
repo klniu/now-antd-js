@@ -1,5 +1,5 @@
 import React  from 'react';
-import {Button, Row, Col, Icon} from 'antd';
+import {Button, Icon} from 'antd';
 import PropTypes from 'prop-types';
 import "./SideModal.css"
 
@@ -15,14 +15,8 @@ class SideModal extends React.Component {
                 </div>
                 <div className={`side-modal-content ${this.props.contentClassName}`}>{this.props.children}</div>
                 <div className={`side-modal-footer ${this.props.footerClassName}`}>
-                    <Row gutter={16}>
-                        <Col span={6} offset={6}>
-                            <Button type="primary" onClick={this.props.onOk}>提交</Button>
-                        </Col>
-                        <Col span={6}>
+                            <Button type="primary" onClick={this.props.onOk} style={{marginRight: "75px"}}>提交</Button>
                             <Button onClick={this.props.onCancel}>取消</Button>
-                        </Col>
-                    </Row>
                 </div>
             </div>
         );
