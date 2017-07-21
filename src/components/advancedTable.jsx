@@ -1,15 +1,16 @@
 import React  from 'react';
 import PropTypes from 'prop-types';
-import {Table, Modal, Button, Form} from 'antd';
+import {Table, Modal, Button, Form, Spin} from 'antd';
 import axios from 'axios'
 import BasicTable from './BasicTable';
 import SideModal from "./SideModal";
-import {getFormItems, handleFormData} from './forms'
+import {getFormItems, handleFormData} from './formBuilder'
 import {RandomStr} from "./common";
 import {isEqual} from 'lodash/lang';
 
 class AdvancedTableBase extends React.Component {
     state = {
+        loading: false,
         selectedRowKeys: [],
         formInitData: {},
         formVisible: false,
@@ -31,7 +32,7 @@ class AdvancedTableBase extends React.Component {
         })
     };
 
-    edit = (record, index, event) => {
+    edit = (record) => {
         // reset form
         this.props.form.resetFields();
         this.setState({
@@ -67,10 +68,13 @@ class AdvancedTableBase extends React.Component {
                         refreshTable: RandomStr(),
                         loading: false,
                     });
-                }).catch(function (error) {
+                }).catch((error) => {
                     Modal.error({
                         title: '删除失败',
                         content: error + '. 请检查网络'
+                    });
+                    this.setState({
+                        loading: false
                     });
                 });
             },
@@ -119,6 +123,9 @@ class AdvancedTableBase extends React.Component {
                 title: '提交失败',
                 content: error + '. 请检查网络'
             });
+            this.setState({
+                loading: false
+            });
         });
     };
 
@@ -131,7 +138,7 @@ class AdvancedTableBase extends React.Component {
         };
         const formItems = getFormItems(getFieldDecorator, this.props.formOptions, this.state.formInitData, formItemLayout);
         return (
-            <div>
+            <Spin spinning={this.state.loading}>
                 <div style={{textAlign: "left"}}>
                     <Button type="primary" onClick={this.add}>添加</Button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Button type="danger" disabled={this.state.selectedRowKeys.length === 0}
@@ -151,7 +158,7 @@ class AdvancedTableBase extends React.Component {
                         {formItems}
                     </Form>
                 </SideModal>
-            </div>
+            </Spin>
         );
     }
 }
